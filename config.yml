@@ -1,0 +1,42 @@
+author: Walid Oulderra
+
+shouldInsertData: true
+
+jsonFilePath: countries.json
+
+server:
+  # Make application run on port 5000
+  applicationConnectors:
+    - type: http
+      port: 5000
+
+database:
+  # the name of your JDBC driver
+  driverClass: com.mysql.cj.jdbc.Driver
+
+  # the username
+  user: root
+
+  # the password
+  password: root
+
+  # the JDBC URL
+  url: jdbc:mysql://localhost:3306/countries
+
+  # any properties specific to your JDBC driver:
+  properties:
+    charSet: UTF-8
+    hibernate.dialect: org.hibernate.dialect.MySQLDialect
+
+  # the maximum amount of time to wait on an empty pool before throwing an exception
+  maxWaitForConnection: 1s
+
+  # the minimum number of connections to keep open
+  minSize: 8
+
+  # the maximum number of connections to keep open
+  maxSize: 32
+
+  # whether or not idle connections should be validated
+  checkConnectionWhileIdle: false
+
