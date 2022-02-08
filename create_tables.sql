@@ -8,11 +8,12 @@ DROP TABLE IF EXISTS country;
 CREATE TABLE country (
 country_code varchar(5) PRIMARY KEY,
 capital varchar(50),
-official_name varchar(50),
-common_name varchar(50),
+official_name varchar(200),
+common_name varchar(200),
 flag varchar(200),
 population int,
-timezone varchar(20)
+timezone varchar(20),
+independent bool
 );
 
 CREATE TABLE IF NOT EXISTS language(
@@ -39,7 +40,7 @@ CREATE TABLE currency(
 id int PRIMARY KEY AUTO_INCREMENT,
 currency_code varchar(10),
 name varchar(50),
-symbol varchar(5),
+symbol varchar(20),
 country_code varchar(5),
 FOREIGN KEY(country_code) REFERENCES country(country_code)
 );
