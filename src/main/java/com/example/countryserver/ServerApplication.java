@@ -1,9 +1,13 @@
 package com.example.countryserver;
 
+import com.example.countryserver.core.Country;
+import com.example.countryserver.core.CountryGeo;
 import com.example.countryserver.core.CountryT;
 import com.example.countryserver.db.CountryDAO;
+import com.example.countryserver.db.CountryTDAO;
 import com.example.countryserver.health.BasicHealthCheck;
 import com.example.countryserver.resources.CountryResource;
+import com.example.countryserver.resources.CountryTResource;
 import com.example.countryserver.util.Util;
 import io.dropwizard.Application;
 import io.dropwizard.db.DataSourceFactory;
@@ -24,7 +28,7 @@ public class ServerApplication extends Application<ServerConfiguration> {
     }
 
     // Adding Hibernate
-    private final HibernateBundle<ServerConfiguration> hibernate = new HibernateBundle<ServerConfiguration>(CountryT.class) {
+    private final HibernateBundle<ServerConfiguration> hibernate = new HibernateBundle<ServerConfiguration>(CountryT.class, Country.class, CountryGeo.class) {
         @Override
         public DataSourceFactory getDataSourceFactory(ServerConfiguration configuration) {
             return configuration.getDataSourceFactory();
@@ -53,6 +57,11 @@ public class ServerApplication extends Application<ServerConfiguration> {
         //Adding a basic HealthCheck
         final BasicHealthCheck basicHealthCheck = new BasicHealthCheck(configuration.getAuthor());
         environment.healthChecks().register("author",basicHealthCheck);
+
+        // Country TEST
+        final CountryTDAO countryTDAO = new CountryTDAO(hibernate.getSessionFactory());
+        final CountryTResource countryTResource = new CountryTResource(countryTDAO);
+        environment.jersey().register(countryTResource);
 
         // Country
         final CountryDAO countryDAO = new CountryDAO(hibernate.getSessionFactory());

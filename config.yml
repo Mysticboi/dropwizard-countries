@@ -1,6 +1,6 @@
 author: Walid Oulderra
 
-shouldInsertData: true
+shouldInsertData: false
 
 jsonFilePath: countries.json
 
