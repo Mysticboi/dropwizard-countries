@@ -2,7 +2,7 @@ author: Walid Oulderra
 
 shouldInsertData: false
 
-jsonFilePath: countries.json
+jsonFilePath: data/countries.json
 
 server:
   # Make application run on port 5000
