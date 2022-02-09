@@ -16,7 +16,7 @@ timezone varchar(20),
 independent bool
 );
 
-CREATE TABLE IF NOT EXISTS language(
+CREATE TABLE language(
 id int PRIMARY KEY AUTO_INCREMENT,
 language_code varchar(5),
 name varchar(50),
