@@ -43,17 +43,6 @@ public class CountryGeo {
 
     }
 
-    public CountryGeo(String countryCode, float area, float latitude, float longitude, String region, String subregion, String continent, Country country) {
-        this.countryCode = countryCode;
-        this.area = area;
-        this.latitude = latitude;
-        this.longitude = longitude;
-        this.region = region;
-        this.subregion = subregion;
-        this.continent = continent;
-        this.country = country;
-    }
-
     public String getCountryCode() {
         return countryCode;
     }

@@ -1,6 +1,7 @@
 package com.example.countryserver.core;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name="country")
@@ -34,6 +35,12 @@ public class Country {
     @OneToOne(mappedBy="country",cascade = CascadeType.ALL)
     @PrimaryKeyJoinColumn
     private CountryGeo countryGeo;
+
+    @OneToMany(mappedBy="country",cascade = CascadeType.ALL)
+    private List<Language> languages;
+
+    @OneToMany(mappedBy="country",cascade = CascadeType.ALL)
+    private List<Currency> currencies;
 
     public Country(){
 
@@ -109,5 +116,21 @@ public class Country {
 
     public void setCountryGeo(CountryGeo countryGeo) {
         this.countryGeo = countryGeo;
+    }
+
+    public List<Language> getLanguages() {
+        return languages;
+    }
+
+    public void setLanguages(List<Language> languages) {
+        this.languages = languages;
+    }
+
+    public List<Currency> getCurrencies() {
+        return currencies;
+    }
+
+    public void setCurrencies(List<Currency> currencies) {
+        this.currencies = currencies;
     }
 }

@@ -1,8 +1,6 @@
 package com.example.countryserver;
 
-import com.example.countryserver.core.Country;
-import com.example.countryserver.core.CountryGeo;
-import com.example.countryserver.core.CountryT;
+import com.example.countryserver.core.*;
 import com.example.countryserver.db.CountryDAO;
 import com.example.countryserver.db.CountryTDAO;
 import com.example.countryserver.health.BasicHealthCheck;
@@ -28,7 +26,7 @@ public class ServerApplication extends Application<ServerConfiguration> {
     }
 
     // Adding Hibernate
-    private final HibernateBundle<ServerConfiguration> hibernate = new HibernateBundle<ServerConfiguration>(CountryT.class, Country.class, CountryGeo.class) {
+    private final HibernateBundle<ServerConfiguration> hibernate = new HibernateBundle<ServerConfiguration>(CountryT.class, Country.class, CountryGeo.class, Language.class, Currency.class) {
         @Override
         public DataSourceFactory getDataSourceFactory(ServerConfiguration configuration) {
             return configuration.getDataSourceFactory();

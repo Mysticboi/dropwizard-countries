@@ -19,7 +19,6 @@ public class CountryTResource {
         this.countryTDAO = countryTDAO;
     }
 
-    @Path("/")
     @GET
     @UnitOfWork
     public List<CountryT> getAllCountries(){
