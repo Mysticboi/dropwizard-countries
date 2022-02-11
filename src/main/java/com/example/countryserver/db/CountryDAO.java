@@ -14,4 +14,16 @@ public class CountryDAO extends AbstractDAO<Country> {
     public List<Country> findAll(){
         return this.currentSession().createQuery("SELECT c FROM Country c",Country.class).getResultList();
     }
+
+    public List<String> getAllCommonNames(){
+        return this.currentSession().createQuery("SELECT c.commonName FROM Country  c",String.class).getResultList();
+    }
+
+    public List<String> getAllCountryCodes(){
+        return currentSession().createQuery("SELECT c.countryCode FROM Country c",String.class).getResultList();
+    }
+
+    public Country findByCode(String code){
+        return get(code);
+    }
 }
