@@ -2,10 +2,8 @@ package com.example.countryserver;
 
 import com.example.countryserver.core.*;
 import com.example.countryserver.db.CountryDAO;
-import com.example.countryserver.db.CountryTDAO;
 import com.example.countryserver.health.BasicHealthCheck;
 import com.example.countryserver.resources.CountryResource;
-import com.example.countryserver.resources.CountryTResource;
 import com.example.countryserver.util.Util;
 import io.dropwizard.core.Application;
 import io.dropwizard.core.setup.Bootstrap;
@@ -21,12 +19,12 @@ public class ServerApplication extends Application<ServerConfiguration> {
     }
 
     @Override
-    public String getName(){
+    public String getName() {
         return "CountryServer";
     }
 
     // Adding Hibernate
-    private final HibernateBundle<ServerConfiguration> hibernate = new HibernateBundle<ServerConfiguration>(CountryT.class, Country.class, CountryGeo.class, Language.class, Currency.class) {
+    private final HibernateBundle<ServerConfiguration> hibernate = new HibernateBundle<ServerConfiguration>(Country.class, CountryGeo.class, Language.class, Currency.class) {
         @Override
         public DataSourceFactory getDataSourceFactory(ServerConfiguration configuration) {
             return configuration.getDataSourceFactory();
@@ -35,29 +33,24 @@ public class ServerApplication extends Application<ServerConfiguration> {
 
 
     @Override
-    public void initialize(Bootstrap<ServerConfiguration> bootstrap){
+    public void initialize(Bootstrap<ServerConfiguration> bootstrap) {
         bootstrap.addBundle(hibernate);
     }
 
     @Override
-    public void run(ServerConfiguration configuration, Environment environment){
+    public void run(ServerConfiguration configuration, Environment environment) {
 
         // JDBI for inserting data ( Can use Hibernate later )
         final JdbiFactory factory = new JdbiFactory();
-        final Jdbi jdbi = factory.build(environment,configuration.getDataSourceFactory(),"mysql");
+        final Jdbi jdbi = factory.build(environment, configuration.getDataSourceFactory(), "mysql");
 
-        if(configuration.getShouldInsertData()){
-            Util.populateDatabase(configuration.getJsonFilePath(),jdbi);
+        if (configuration.getShouldInsertData()) {
+            Util.populateDatabase(configuration.getJsonFilePath(), jdbi);
         }
 
-        //Adding a basic HealthCheck
+        // Adding a basic HealthCheck
         final BasicHealthCheck basicHealthCheck = new BasicHealthCheck(configuration.getAuthor());
-        environment.healthChecks().register("author",basicHealthCheck);
-
-        // Country TEST
-        final CountryTDAO countryTDAO = new CountryTDAO(hibernate.getSessionFactory());
-        final CountryTResource countryTResource = new CountryTResource(countryTDAO);
-        environment.jersey().register(countryTResource);
+        environment.healthChecks().register("author", basicHealthCheck);
 
         // Country
         final CountryDAO countryDAO = new CountryDAO(hibernate.getSessionFactory());

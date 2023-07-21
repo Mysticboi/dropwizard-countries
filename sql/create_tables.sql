@@ -1,4 +1,4 @@
-CREATE DATABASE IF NOT EXIST countries;
+CREATE DATABASE IF NOT EXISTS countries;
 USE countries;
 
 DROP TABLE IF EXISTS language;

@@ -1,7 +1,7 @@
 author: Walid Oulderra
 
 # If the script for populating the database from the json file should be run
-shouldInsertData: false
+shouldInsertData: true
 
 jsonFilePath: data/countries.json
 

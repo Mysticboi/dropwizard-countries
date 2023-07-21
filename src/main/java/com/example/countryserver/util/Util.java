@@ -10,17 +10,13 @@ import java.io.File;
 import java.util.concurrent.TimeUnit;
 
 public class Util {
-    public static void main(String[] args) {
-        System.out.println("Hello World");
-        loadDatabase("countries.json", null);
+    public static boolean populateDatabase(String filePath, Jdbi jdbi) {
+        return populateDatabasePreparedBatch(filePath, jdbi);
     }
 
-    public static boolean loadDatabase(String filePath, Jdbi jdbi) {
-        return loadDatabasePreparedBatch(filePath, jdbi);
-    }
-
-    // This version takes approximately 5 minutes to insert everything
-    public static boolean loadDatabaseHandleOnly(String filePath, Jdbi jdbi) {
+    // This version takes longer to insert everything
+    // You'll find a better version below using PreparedBatches
+    private static boolean populateDatabaseHandleOnly(String filePath, Jdbi jdbi) {
         ObjectMapper mapper = new ObjectMapper();
 
         try {
@@ -34,8 +30,8 @@ public class Util {
             jdbi.useHandle(handle -> {
                 Country[] countries = mapper.readValue(new File(filePath), Country[].class);
                 for (Country country : countries) {
-//                String prettyCountry = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(country);
-//                System.out.println(prettyCountry);
+                    // String prettyCountry = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(country);
+                    // System.out.println(prettyCountry);
 
                     // For country table
                     String countryCode = country.getCca3();
@@ -123,14 +119,13 @@ public class Util {
             System.out.println("Success inserting data into the database ! Finished in " + timeSpent + " seconds");
         } catch (Exception e) {
             System.err.println("Failed insertion in database...");
-            System.err.println(e);
+            e.printStackTrace();
             return false;
         }
         return true;
     }
 
-    // This version takes approximately 2.5 minutes to insert everything
-    public static boolean loadDatabasePreparedBatch(String filePath, Jdbi jdbi) {
+    private static boolean populateDatabasePreparedBatch(String filePath, Jdbi jdbi) {
         ObjectMapper mapper = new ObjectMapper();
 
         try {
@@ -166,8 +161,8 @@ public class Util {
 
 
                 for (Country country : countries) {
-//                String prettyCountry = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(country);
-//                System.out.println(prettyCountry);
+                    // String prettyCountry = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(country);
+                    // System.out.println(prettyCountry);
 
                     // For country table
                     String countryCode = country.getCca3();
@@ -253,19 +248,9 @@ public class Util {
             System.out.println("Success inserting data into the database ! Finished in " + timeSpent + " seconds");
         } catch (Exception e) {
             System.err.println("Failed insertion in database...");
-            System.err.println(e);
+            e.printStackTrace();
             return false;
         }
         return true;
-    }
-
-    private static void testJdbi(Jdbi jdbi) {
-        jdbi.useHandle(handle -> {
-            handle.createUpdate("INSERT INTO test  (name,population,capital) VALUES (:name,:population,:capital)")
-                    .bind("name", "Belgium")
-                    .bind("population", 1000)
-                    .bind("capital", "Brussels")
-                    .execute();
-        });
     }
 }
