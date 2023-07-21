@@ -1,6 +1,6 @@
 package com.example.countryserver.core;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name="test")

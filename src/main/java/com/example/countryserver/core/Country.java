@@ -1,6 +1,7 @@
 package com.example.countryserver.core;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
+
 import java.util.List;
 
 @Entity
