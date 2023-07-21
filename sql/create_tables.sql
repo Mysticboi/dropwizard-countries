@@ -1,4 +1,5 @@
-use countries;
+CREATE DATABASE IF NOT EXIST countries;
+USE countries;
 
 DROP TABLE IF EXISTS language;
 DROP TABLE IF EXISTS country_geo;

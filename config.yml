@@ -1,5 +1,6 @@
 author: Walid Oulderra
 
+# If the script for populating the database from the json file should be run
 shouldInsertData: false
 
 jsonFilePath: data/countries.json
@@ -14,10 +15,7 @@ database:
   # the name of your JDBC driver
   driverClass: com.mysql.cj.jdbc.Driver
 
-  # the username
   user: root
-
-  # the password
   password: root
 
   # the JDBC URL
@@ -37,6 +35,6 @@ database:
   # the maximum number of connections to keep open
   maxSize: 32
 
-  # whether or not idle connections should be validated
+  # whether idle connections should be validated
   checkConnectionWhileIdle: false
 
