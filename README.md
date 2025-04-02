@@ -13,6 +13,8 @@ json file.
     4. Connect to MySQL `mysql -p` use `root` for password
     5. Run the script file `source /home/create_tables.sql`
     6. You can check the database and tables were created by running `USE countries;` and `SHOW tables;`
+    7. You can stop the mysql container by running `docker stop mysql`. And next time you'd like to restart it, you can
+       use `docker start mysql`
 2. (Skip this if you've done point 5 of the previous step) Once the sql instance is running, run the script
    `sql/create_tables.sql` in your fav sql editor or through the mysql
    cli to create the database and tables. You can also use this script to drop the tables and recreate them from scratch
